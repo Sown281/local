@@ -1,0 +1,22 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
+local TeleportService = game:GetService("TeleportService")
+local players = game:GetService("Players")
+local wrk = game:GetService("Workspace")
+local plr = players.LocalPlayer
+local hrp = plr.Character:FindFirstChild("HumanoidRootPart")
+local humanoid = plr.Character:FindFirstChild("Humanoid")
+
+local function onCharacterAdded(character)
+    hrp = character:WaitForChild("HumanoidRootPart")
+    humanoid = character:WaitForChild("Humanoid")
+end
+
+plr.CharacterAdded:Connect(onCharacterAdded)
+
+if plr.Character then
+    onCharacterAdded(plr.Character)
+end
+ local window = Rayfield:CreateWindow({
