@@ -29,3 +29,5 @@ local Window = Rayfield:CreateWindow({
         FileName = "byAgreed"
     },
 })
+
+local player = Window:CreateTab("local player")
