@@ -37,7 +37,7 @@ tab1:CreateInput({
     PlaceholderText = ("Text Input"),
     RemoveTextAfterFocusLost = false,
     Callback = function(value)
-         local newSpeed = tonumer(value)
+         local newSpeed = tonumber(value)
          if newSpeed and newSpeed > 0 then
               if plr.Character and plr.Character:FindFirstChild("humanoid") then
                  plr.Character.Humanoid.Walkspeed = newSpeed
