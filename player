@@ -42,9 +42,9 @@ KeyTab:CreateInput({
                 }
             })
             
-            -- Xóa KeyWindow và hiển thị MainWindow sau 0.5 giây
+            -- Xóa toàn bộ giao diện Rayfield và tạo giao diện chính
             wait(0.5)
-            Rayfield:Destroy()
+            Rayfield:Destroy()  -- Đóng toàn bộ giao diện Rayfield
 
             createMainWindow() -- Gọi hàm tạo giao diện chính
         else
