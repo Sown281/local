@@ -1,14 +1,5 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local HttpService = game:GetService("HttpService")
-local RunService = game:GetService("RunService")
-local TeleportService = game:GetService("TeleportService")
-local players = game:GetService("Players")
-local wrk = game:GetService("Workspace")
-local plr = players.LocalPlayer
-local hrp = plr.Character:FindFirstChild("HumanoidRootPart")
-local humanoid = plr.Character:FindFirstChild("Humanoid")
-
 local correctKey = "Sown123" -- Key mà bạn muốn người dùng nhập
 
 -- Tạo cửa sổ nhập key
@@ -51,8 +42,10 @@ KeyTab:CreateInput({
                 }
             })
             
-            -- Xóa KeyWindow và hiển thị MainWindow
-            KeyWindow:Destroy()
+            -- Xóa KeyWindow và hiển thị MainWindow sau 0.1 giây để đảm bảo
+            wait(0.1) -- Đảm bảo rằng KeyWindow được xóa trước khi tạo MainWindow
+            KeyWindow:Destroy()  -- Xóa cửa sổ nhập key
+            
             createMainWindow() -- Gọi hàm tạo giao diện chính
         else
             Rayfield:Notify({
