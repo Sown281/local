@@ -30,22 +30,21 @@ local Window = Rayfield:CreateWindow({
     },
 })
 
-
 local tab1 = Window:CreateTab("local player")
 tab1:CreateInput({
-    Name = "New Speed",
-    PlaceholderText = ("Text Input"),
-    RemoveTextAfterFocusLost = false,
+    Name = "Tốc độ di chuyển",
+    PlaceholderText = "Nhập tốc độ",
+    RemoveTextAfterFocusLost = true,
     Callback = function(value)
-         local newSpeed = tonumber(value)
-         if newSpeed and newSpeed > 0 then
-              if plr.Character and plr.Character:FindFirstChild("humanoid") then
-                 plr.Character.Humanoid.Walkspeed = newSpeed
-              else
-                   warn("không tìm thấy humanoid hợp lệ")
-              end
-         else
-               warn("new speed khômg hợp lệ")
-         end
-   end
+        local newSpeed = tonumber(value)
+        if newSpeed and newSpeed > 0 then
+            if plr.Character and plr.Character:FindFirstChild("Humanoid") then
+                plr.Character.Humanoid.WalkSpeed = newSpeed
+            else
+                warn("Không tìm thấy Humanoid để thay đổi tốc độ.")
+            end
+        else
+            warn("Giá trị nhập không hợp lệ.")
+        end
+    end
 })
