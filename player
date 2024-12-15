@@ -9,11 +9,11 @@ local KeyWindow = Rayfield:CreateWindow({
     LoadingSubtitle = "Vui lòng nhập key",
     Theme = "Default",
     ConfigurationSaving = {
-        Enabled = true, -- Tùy chọn này không ảnh hưởng đến lưu key thủ công
+        Enabled = true,
         FolderName = nil,
         FileName = "Pig's food hub"
     },
-    KeySystem = false -- Không sử dụng KeySystem của Rayfield
+    KeySystem = false
 })
 
 -- Tạo một tab nhập key
@@ -42,9 +42,9 @@ KeyTab:CreateInput({
                 }
             })
             
-            -- Xóa KeyWindow và hiển thị MainWindow sau 0.1 giây để đảm bảo
-            wait(0.1) -- Đảm bảo rằng KeyWindow được xóa trước khi tạo MainWindow
-            KeyWindow:Destroy()  -- Xóa cửa sổ nhập key
+            -- Xóa KeyWindow và hiển thị MainWindow sau 0.5 giây
+            wait(0.5)
+            KeyWindow:Destroy()
             
             createMainWindow() -- Gọi hàm tạo giao diện chính
         else
@@ -73,7 +73,7 @@ function createMainWindow()
         LoadingSubtitle = "script beta by S",
         Theme = "Default",
         ConfigurationSaving = {
-            Enabled = false, -- Tắt lưu trữ dữ liệu của MainWindow
+            Enabled = false,
             FolderName = nil,
             FileName = "Pig's food hub"
         },
