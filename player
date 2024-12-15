@@ -31,17 +31,13 @@ local Window = Rayfield:CreateWindow({
 })
 
 local tab1 = Window:CreateTab("local player")
+
 tab1:CreateInput({
     Name = "Tốc độ di chuyển",
     PlaceholderText = "Nhập tốc độ",
     RemoveTextAfterFocusLost = false,
     Callback = function(value)
-        local newSpeed = tonumber(value)
-        if newSpeed and newSpeed > 0 then
-            if plr.Character and plr.Character:FindFirstChild("Humanoid") then
-                plr.Character.Humanoid.WalkSpeed = newSpeed
-            end
-        end
+        setPlayerSpeed(value) -- Gọi hàm `setPlayerSpeed` với giá trị nhập
     end
 })
 
@@ -62,14 +58,23 @@ local function showSpeedNotification(speed)
 end
 
 local function setPlayerSpeed(value)
-    local speed = tonumber(value)
+    local speed = tonumber(value) -- Chuyển đổi giá trị nhập thành số
     if speed and speed > 0 then
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = speed
-        showSpeedNotification(speed)
+        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = speed
+            showSpeedNotification(speed) -- Hiển thị thông báo thành công
+        else
+            Rayfield:Notify({
+                Title = "Lỗi",
+                Content = "Không tìm thấy nhân vật hoặc Humanoid.",
+                Duration = 3
+            })
+        end
     else
-        showSpeedNotification(0)
+        showSpeedNotification(0) -- Hiển thị thông báo lỗi
     end
 end
 
-setPlayerSpeed("50") -- Ví dụ đặt tốc độ hợp lệ
-setPlayerSpeed("abc") -- Ví dụ đặt tốc độ không hợp lệ
+-- Ví dụ:
+setPlayerSpeed("50") -- Đặt tốc độ hợp lệ
+setPlayerSpeed("abc") -- Đặt tốc độ không hợp lệ
