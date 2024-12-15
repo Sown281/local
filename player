@@ -20,9 +20,9 @@ if plr.Character then
     onCharacterAdded(plr.Character)
 end
 local Window = Rayfield:CreateWindow({
-    Name = "▶ Lo Chon Hub ◀",
+    Name = "▶ Universal script ◀",
     LoadingTitle = "Loading...",
-    LoadingSubtitle = "by LSown DZvcl 🥵",
+    LoadingSubtitle = "by LSown🥵",
     ConfigurationSaving = {
         Enabled = true,
         FolderName = "UniversalHub",
@@ -30,4 +30,22 @@ local Window = Rayfield:CreateWindow({
     },
 })
 
-local player = Window:CreateTab("local player")
+
+local tab1 = Window:CreateTab("local player")
+tab1:CreateInput({
+    Name = "New Speed",
+    PlaceholderText = ("Text Input"),
+    RemoveTextAfterFocusLost = false,
+    Callback = function(value)
+         local newSpeed = tonumer(value)
+         if newSpeed and newSpeed > 0 then
+              if plr.Character and plr.Character:FindFirstChild("humanoid") then
+                 plr.Character.Humanoid.Walkspeed = newSpeed
+              else
+                   warn("không tìm thấy humanoid hợp lệ")
+              end
+         else
+               warn("new speed khômg hợp lệ")
+         end
+   end
+})
