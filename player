@@ -1,39 +1,5 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
-local Window = Rayfield:CreateWindow({
-   Name = "Nồi cám hợi🤑",
-   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
-   LoadingTitle = "《《《 ĐANG LOAD 》》》",
-   LoadingSubtitle = "script beta by S",
-   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
-
-   DisableRayfieldPrompts = false,
-   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
-
-   ConfigurationSaving = {
-      Enabled = true,
-      FolderName = nil, -- Create a custom folder for your hub/game
-      FileName = "Pig's food hub"
-   },
-
-   Discord = {
-      Enabled = false, -- Prompt the user to join your Discord server if their executor supports it
-      Invite = "noinvitelink", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
-      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
-   },
-
-   KeySystem = true, -- Set this to true to use our key system
-   KeySettings = {
-      Title = "Hỏi dev đi",
-      Subtitle = "Key System🤑",
-      Note = "No method of obtaining the key is provided ỳe yeah", -- Use this to tell the user how to get a key
-      FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
-      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
-      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = {"Sown123"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
-   }
-})
-
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local TeleportService = game:GetService("TeleportService")
@@ -43,53 +9,119 @@ local plr = players.LocalPlayer
 local hrp = plr.Character:FindFirstChild("HumanoidRootPart")
 local humanoid = plr.Character:FindFirstChild("Humanoid")
 
-local function onCharacterAdded(character)
-    hrp = character:WaitForChild("HumanoidRootPart")
-    humanoid = character:WaitForChild("Humanoid")
-end
+local correctKey = "Sown123" -- Key mà bạn muốn người dùng nhập
 
-plr.CharacterAdded:Connect(onCharacterAdded)
-
-if plr.Character then
-    onCharacterAdded(plr.Character)
-end
-
-local tab1 = Window:CreateTab("local player🔥")
-
-local isFlying = false
-
-local tog1 = tab1:CreateToggle({
-     Name = "Enable/Disable fly"
-     CurrentValue = false,
-     Flag = "FlyToggle",
-     Callback = function(Value)
-        toggleFly(Value)
-    end,
+-- Tạo cửa sổ nhập key
+local KeyWindow = Rayfield:CreateWindow({
+    Name = "Nhập Key để tiếp tục",
+    LoadingTitle = "Đang tải hệ thống",
+    LoadingSubtitle = "Vui lòng nhập key",
+    Theme = "Default",
+    ConfigurationSaving = {
+        Enabled = true, -- Tùy chọn này không ảnh hưởng đến lưu key thủ công
+        FolderName = nil,
+        FileName = "Pig's food hub"
+    },
+    KeySystem = false -- Không sử dụng KeySystem của Rayfield
 })
 
-local function toggleFly(state)
-    isFlying = state
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
+-- Tạo một tab nhập key
+local KeyTab = KeyWindow:CreateTab("Nhập Key")
 
-    if state then
-        -- Kích hoạt fly
-        local humanoid = character:WaitForChild("Humanoid")
-        humanoid.PlatformStand = true
-        local flyPart = Instance.new("BodyVelocity", character.PrimaryPart)
-        flyPart.Velocity = Vector3.new(0, 50, 0) -- Bay lên
-        flyPart.MaxForce = Vector3.new(100000, 100000, 100000)
-        flyPart.Name = "FlyVelocity"
-    else
-        -- Tắt fly
-        local flyVelocity = character.PrimaryPart:FindFirstChild("FlyVelocity")
-        if flyVelocity then
-            flyVelocity:Destroy()
+-- Tạo một biến để lưu trạng thái nhập key
+local isKeyValid = false
+
+KeyTab:CreateInput({
+    Name = "Nhập Key:",
+    PlaceholderText = "Nhập key của bạn...",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Value)
+        if Value == correctKey then
+            isKeyValid = true
+            Rayfield:Notify({
+                Title = "Key hợp lệ!",
+                Content = "Đang mở phần chính...",
+                Duration = 3,
+                Image = nil,
+                Actions = {
+                    Ignore = {
+                        Name = "OK",
+                        Callback = function() end
+                    }
+                }
+            })
+            
+            -- Xóa KeyWindow và hiển thị MainWindow
+            KeyWindow:Destroy()
+            createMainWindow() -- Gọi hàm tạo giao diện chính
+        else
+            Rayfield:Notify({
+                Title = "Key không hợp lệ!",
+                Content = "Vui lòng thử lại.",
+                Duration = 3,
+                Image = nil,
+                Actions = {
+                    Ignore = {
+                        Name = "OK",
+                        Callback = function() end
+                    }
+                }
+            })
         end
+    end
+})
+
+-- Hàm tạo giao diện chính
+function createMainWindow()
+    local MainWindow = Rayfield:CreateWindow({
+        Name = "Nồi cám hợi🤑",
+        Icon = 0,
+        LoadingTitle = "《《《 ĐANG LOAD 》》》",
+        LoadingSubtitle = "script beta by S",
+        Theme = "Default",
+        ConfigurationSaving = {
+            Enabled = false, -- Tắt lưu trữ dữ liệu của MainWindow
+            FolderName = nil,
+            FileName = "Pig's food hub"
+        },
+        Discord = {
+            Enabled = false,
+            Invite = "noinvitelink",
+            RememberJoins = true
+        }
+    })
+
+    local MainTab = MainWindow:CreateTab("local player🔥")
+
+    -- Thêm Toggle Fly
+    local isFlying = false
+
+    local function toggleFly(state)
+        local character = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
         local humanoid = character:FindFirstChild("Humanoid")
-        if humanoid then
+        local primaryPart = character.PrimaryPart
+
+        if state then
+            humanoid.PlatformStand = true
+            local flyPart = Instance.new("BodyVelocity", primaryPart)
+            flyPart.Velocity = Vector3.new(0, 50, 0)
+            flyPart.MaxForce = Vector3.new(100000, 100000, 100000)
+            flyPart.Name = "FlyVelocity"
+        else
+            local flyVelocity = primaryPart:FindFirstChild("FlyVelocity")
+            if flyVelocity then
+                flyVelocity:Destroy()
+            end
             humanoid.PlatformStand = false
         end
     end
-end
 
+    MainTab:CreateToggle({
+        Name = "Enable/Disable Fly",
+        CurrentValue = false,
+        Flag = "FlyToggle",
+        Callback = function(Value)
+            toggleFly(Value)
+        end,
+    })
+end
