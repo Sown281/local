@@ -44,49 +44,5 @@ local Window = Rayfield:CreateWindow({
 
 local tab1 = Window:CreateTab("local player")
 
-tab1:CreateInput({
-    Name = "Tốc độ di chuyển",
-    PlaceholderText = "Nhập tốc độ",
-    RemoveTextAfterFocusLost = false,
-    Callback = function(value)
-        setPlayerSpeed(value) -- Gọi hàm `setPlayerSpeed` với giá trị nhập
-    end
-})
-
-local function showSpeedNotification(speed)
-    if speed > 0 then
-        Rayfield:Notify({
-            Title = "Tốc Độ Đã Được Cập Nhật",
-            Content = "Tốc độ của bạn đã được đặt thành: " .. speed,
-            Duration = 3
-        })
-    else
-        Rayfield:Notify({
-            Title = "Lỗi",
-            Content = "Giá trị tốc độ không hợp lệ! Hãy nhập số lớn hơn 0.",
-            Duration = 3
-        })
-    end
-end
-
-local function setPlayerSpeed(value)
-    local speed = tonumber(value) -- Chuyển đổi giá trị nhập thành số
-    if speed and speed > 0 then
-        if game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
-            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = speed
-            showSpeedNotification(speed) -- Hiển thị thông báo thành công
-        else
-            Rayfield:Notify({
-                Title = "Lỗi",
-                Content = "Không tìm thấy nhân vật hoặc Humanoid.",
-                Duration = 3
-            })
-        end
-    else
-        showSpeedNotification(0) -- Hiển thị thông báo lỗi
-    end
-end
-
--- Ví dụ:
-setPlayerSpeed("50") -- Đặt tốc độ hợp lệ
-setPlayerSpeed("abc") -- Đặt tốc độ không hợp lệ
+local tog1 = tab1:CreateToggle({
+     Name = "Enable/Disable fly"
