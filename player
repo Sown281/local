@@ -42,7 +42,42 @@ local Window = Rayfield:CreateWindow({
     },
 })
 
-local tab1 = Window:CreateTab("local player")
+local tab1 = Window:CreateTab("local player🔥")
+
+local isFlying = false
 
 local tog1 = tab1:CreateToggle({
      Name = "Enable/Disable fly"
+     CurrentValue = false,
+     Flag = "FlyToggle",
+     Callback = function(Value)
+        toggleFly(Value)
+    end,
+})
+
+local function toggleFly(state)
+    isFlying = state
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+
+    if state then
+        -- Kích hoạt fly
+        local humanoid = character:WaitForChild("Humanoid")
+        humanoid.PlatformStand = true
+        local flyPart = Instance.new("BodyVelocity", character.PrimaryPart)
+        flyPart.Velocity = Vector3.new(0, 50, 0) -- Bay lên
+        flyPart.MaxForce = Vector3.new(100000, 100000, 100000)
+        flyPart.Name = "FlyVelocity"
+    else
+        -- Tắt fly
+        local flyVelocity = character.PrimaryPart:FindFirstChild("FlyVelocity")
+        if flyVelocity then
+            flyVelocity:Destroy()
+        end
+        local humanoid = character:FindFirstChild("Humanoid")
+        if humanoid then
+            humanoid.PlatformStand = false
+        end
+    end
+end
+
