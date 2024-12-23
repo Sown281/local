@@ -29,7 +29,7 @@ local Window = ArrayField:CreateWindow({
                 end,
                 }
             },
-      Key = {("Sown123","Lon")} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+      Key = {"Sown123","Lon"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
 
