@@ -34,3 +34,15 @@ local Window = ArrayField:CreateWindow({
 })
 
 local tab1 = Window:CreateTab("hithox, local plr,...", 4483362458) -- Title, Image
+local Input = Tab:CreateInput({
+   Name = "new speed",
+   PlaceholderText = "nhập vào đây",
+   NumbersOnly = true, -- If the user can only type numbers. Remove or set to false if none.
+   CharacterLimit = 4, --max character limit. Remove or set to false
+   OnEnter = true, -- Will callback only if the user pressed ENTER while being focused on the the box.
+   RemoveTextAfterFocusLost = false, -- Speaks for itself.
+   Callback = function(Text)
+   -- The function that takes place when the input is changed
+   -- The variable (Text) is a string for the value in the text box
+   end,
+})
