@@ -1,11 +1,11 @@
 local ArrayField = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/ArrayField/main/Source.lua'))()
 local Window = ArrayField:CreateWindow({
-   Name = "ArrayField Example Window",
+   Name = "",
    LoadingTitle = "ArrayField Interface Suite",
    LoadingSubtitle = "by Arrays",
    ConfigurationSaving = {
-      Enabled = true,
-      FolderName = nil, -- Create a custom folder for your hub/game
+      Enabled = false,
+      FolderName = uniScript, -- Create a custom folder for your hub/game
       FileName = "ArrayField"
    },
    Discord = {
@@ -29,6 +29,8 @@ local Window = ArrayField:CreateWindow({
                 end,
                 }
             },
-      Key = {"Sown123"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+      Key = {("Sown123","Lon")} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
+
+local tab1 = Window:CreateTab("hithox, local plr,...", 4483362458) -- Title, Image
