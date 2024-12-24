@@ -47,7 +47,7 @@ Tab1:CreateToggle({
 })
 
 -- Script cho infinite jump
-game:GetService("User InputService").JumpRequest:Connect(function()
+game:GetService("UserInputService").JumpRequest:Connect(function()
     if InfiniteJumpEnabled then
         local Player = game:GetService("Players").LocalPlayer
         if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
