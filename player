@@ -1,10 +1,10 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
-   Name = "Rayfield Example Window",
+   Name = "13:30",
    Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
    LoadingTitle = "i cant...",
-   LoadingSubtitle = "by S",
-   Theme = "Default", -- AmberGlow, Amethyst, Bloom, DarkBlue, Green, Light, ...
+   LoadingSubtitle = "by Soffee",
+   Theme = "Bloom", -- AmberGlow, Amethyst, Bloom, DarkBlue, Green, Light, ...
 
    DisableRayfieldPrompts = false,
    DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
@@ -29,8 +29,65 @@ local Window = Rayfield:CreateWindow({
       FileName = "Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
       SaveKey = false, -- The user's key will be saved, but if you change the key, they will be unable to use your script
       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
-      Key = {"Hello"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+      Key = {"Sown123"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
    }
 })
-local tab1 = Widow:CreateTab({
-     
+local Tab1 = Window:CreateTab("Home", "app-window")
+local Player = Tab1:CreateSection("local player")
+local InfiniteJumpEnabled = false
+
+Tab1:CreateToggle({
+     Name = "Infinite Jump",
+    CurrentValue = false,
+    Flag = "ToggleInfiniteJump",
+    Callback = function(Value)
+        InfiniteJumpEnabled = Value
+    end,
+})
+
+-- Script cho infinite jump
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if InfiniteJumpEnabled then
+        local Player = game:GetService("Players").LocalPlayer
+        if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            Player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end
+end)
+
+local SpeedValue = 16 -- Tốc độ mặc định của nhân vật
+Tab1:CreateSlider({
+    Name = "Walk Speed",
+    Range = {16, 300}, -- Tốc độ tối thiểu và tối đa
+    Increment = 1, -- Bước tăng
+    Suffix = "Speed", -- Đơn vị hiển thị
+    CurrentValue = 16, -- Giá trị ban đầu
+    Flag = "WalkSpeedSlider",
+    Callback = function(Value)
+        SpeedValue = Value -- Cập nhật giá trị tốc độ
+        local Player = game:GetService("Players").LocalPlayer
+        if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            Player.Character.Humanoid.WalkSpeed = SpeedValue
+        end
+    end,
+})
+-- đảm bảo tốc độ được duy trì
+game:GetService("RunService").Stepped:Connect(function()
+    local Player = game:GetService("Players").LocalPlayer
+    if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+        Player.Character.Humanoid.WalkSpeed = SpeedValue
+    end
+end)
+
+-- Tạo nút để reset slider
+Tab:CreateButton({
+    Name = "Reset Walk Speed",
+    Callback = function()
+        SpeedValue = 16 -- Đặt lại giá trị tốc độ
+        Slider:Set(16) -- Cập nhật slider về giá trị mặc định
+        local Player = game:GetService("Players").LocalPlayer
+        if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            Player.Character.Humanoid.WalkSpeed = SpeedValue
+        end
+    end,
+})
