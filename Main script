@@ -100,7 +100,7 @@ Rayfield:Notify({
     Title = "Hoàn tất",
     Content = "Script đã tích hợp đầy đủ chức năng.",
     Duration = 5,
-    Image = "badge-check", -- Icon Lucide cho thông báo
+    Image = "check", -- Icon Lucide cho thông báo
     Actions = { -- Thêm nút nếu cần
         Ignore = {
             Name = "OK",
