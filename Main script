@@ -1,5 +1,6 @@
 -- Giả sử Rayfield đã được tải trước đó từ dòng loadstring(game:HttpGet(...))
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local plr = game.Players
 
 -- Tạo cửa sổ chính (window)
 local Window = Rayfield:CreateWindow({
@@ -71,6 +72,9 @@ Tab1:CreateButton({
         end
     end,
 })
+
+-- chỉnh máu
+
 
 -- **Thêm Time Tab vào script chính**
 local TimeTab = Window:CreateTab("Real time", "clock")
