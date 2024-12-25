@@ -73,14 +73,15 @@ Tab1:CreateButton({
 })
 
 -- **Thêm Time Tab vào script chính**
-local TimeTab = Window:CreateTab("Thời gian Việt Nam", "clock")
+local TimeTab = Window:CreateTab("Real time", "clock")
 local TimeLabel = TimeTab:CreateLabel("Đang lấy giờ...")
 
--- Hàm lấy giờ Việt Nam
+-- Hàm lấy giờ Việt Nam chính xác
 local function GetVietnamTime()
-    local utc = os.time(os.date("!*t")) -- Lấy giờ UTC
-    local vietnamTime = utc + 7 * 3600 -- Thêm 7 giờ để thành UTC+7
-    return os.date("Giờ hiện tại: %H:%M:%S", vietnamTime)
+    -- Lấy giờ UTC và điều chỉnh múi giờ
+    local utcTime = os.date("!*t") -- lấy giờ UTC
+    utcTime.hour = utcTime.hour + 7 -- Cộng 7 giờ cho Việt Nam
+    return string.format("Giờ hiện tại: %02d:%02d:%02d", utcTime.hour, utcTime.min, utcTime.sec)
 end
 
 -- Hàm cập nhật giờ
@@ -99,7 +100,7 @@ Rayfield:Notify({
     Title = "Hoàn tất",
     Content = "Script đã tích hợp đầy đủ chức năng.",
     Duration = 5,
-    Image = "lucide:check-circle", -- Icon Lucide cho thông báo
+    Image = "badge-check", -- Icon Lucide cho thông báo
     Actions = { -- Thêm nút nếu cần
         Ignore = {
             Name = "OK",
