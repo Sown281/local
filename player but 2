@@ -1,8 +1,7 @@
 local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-
 local Window = Rayfield:CreateWindow({
     Name = "13:30",
-    Icon = "", -- Cung cấp ID hình ảnh hợp lệ hoặc để trống
+    Icon = 0,
     LoadingTitle = "Why I can't...",
     LoadingSubtitle = "by Neko",
     Theme = "Default",
@@ -96,3 +95,25 @@ Tab1:CreateButton({
         end
     end,
 })
+
+-- Tạo tab hiển thị giờ Việt Nam
+local TimeTab = Window:CreateTab("Thời gian Việt Nam", "rbxassetid://4483362458")
+local TimeLabel = TimeTab:CreateLabel("Đang lấy giờ...")
+
+-- Hàm tính giờ Việt Nam
+local function GetVietnamTime()
+    local utc = os.time(os.date("!*t")) -- Lấy giờ UTC
+    local vietnamTime = utc + 7 * 3600 -- Thêm 7 tiếng để thành UTC+7
+    return os.date("Giờ hiện tại: %H:%M:%S", vietnamTime)
+end
+
+-- Hàm cập nhật giờ
+local function UpdateTime()
+    while wait(1) do
+        local time = GetVietnamTime()
+        TimeLabel:Set(time)
+    end
+end
+
+-- Chạy hàm cập nhật giờ
+task.spawn(UpdateTime)
