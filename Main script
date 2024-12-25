@@ -4,7 +4,7 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 -- Tạo cửa sổ chính (window)
 local Window = Rayfield:CreateWindow({
     Name = "Player but 2", -- Tên cửa sổ
-    Icon = "chevrons-left-right-ellipsis",
+    Icon = 0,
     LoadingTitle = "Script just beta",
     LoadingSubtitle = "dev by Neko",
     Theme = "Default", -- Màu theme
