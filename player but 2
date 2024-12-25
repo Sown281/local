@@ -93,3 +93,135 @@ Tab1:CreateButton({
         end
     end,
 })
+
+Chia sẻ
+
+
+Bạn đã nói:
+Tạo 1 tab hiển thị giờ ở Việt Nam bằng lib sau loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+ChatGPT đã nói:
+ChatGPT
+Để tạo một tab hiển thị giờ ở Việt Nam bằng Rayfield UI Library trong Roblox, m có thể sử dụng đoạn script sau. Tao đã thêm tính năng lấy thời gian hiện tại và cập nhật nó trong giao diện.
+
+lua
+Sao chép mã
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Thời gian Việt Nam",
+    LoadingTitle = "Đang tải...",
+    LoadingSubtitle = "Vui lòng đợi",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = nil, -- Lưu trong workspace nếu để nil
+        FileName = "ThoiGianVN"
+    },
+    Discord = {
+        Enabled = false,
+        Invite = "", -- Thêm link Discord nếu muốn
+        RememberJoins = true
+    },
+    KeySystem = false, -- Không cần key
+})
+
+local Tab = Window:CreateTab("Thời gian", 4483362458) -- Icon ID có thể thay đổi
+
+local Label = Tab:CreateLabel("Đang lấy giờ...")
+
+-- Hàm cập nhật giờ
+local function UpdateTime()
+    while wait(1) do
+        local time = os.date("Giờ hiện tại: %H:%M:%S") -- Lấy giờ theo định dạng 24h
+        Label:Set(time)
+    end
+end
+
+-- Chạy hàm cập nhật giờ
+task.spawn(UpdateTime)
+
+Rayfield:Notify({
+    Title = "Hoàn tất",
+    Content = "Giao diện hiển thị giờ đã sẵn sàng.",
+    Duration = 5,
+    Image = 4483362458, -- Icon ID (tuỳ chọn)
+    Actions = { -- Thêm nút nếu muốn
+        Ignore = {
+            Name = "OK",
+            Callback = function() end
+        }
+    },
+})
+Giải thích:
+Tab hiển thị: Tab này có một nhãn (Label) để hiển thị thời gian.
+Cập nhật thời gian liên tục: Sử dụng os.date để lấy giờ hiện tại và cập nhật mỗi giây.
+Giao diện Rayfield: Tích hợp thông báo để xác nhận giao diện đã sẵn sàng.
+Chạy script này trong game của m để thấy giờ Việt Nam. Nếu cần tùy chỉnh, cứ hỏi tao nhé!
+
+
+
+
+
+
+Bạn đã nói:
+Có cần phải nhập giờ hiện tại ko
+ChatGPT đã nói:
+ChatGPT
+Không cần phải nhập giờ hiện tại vì script tự động sử dụng hàm os.date trong Lua để lấy giờ từ hệ thống. Nó sẽ tự động hiển thị giờ chính xác dựa trên múi giờ của thiết bị mà m đang sử dụng.
+
+Nếu m đang chạy script trong Roblox, nó sẽ lấy giờ theo múi giờ mặc định của máy chủ Roblox, thường là UTC. Để hiển thị giờ Việt Nam (UTC+7), tao sẽ chỉnh lại script để thêm múi giờ:
+
+lua
+Sao chép mã
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+    Name = "Thời gian Việt Nam",
+    LoadingTitle = "Đang tải...",
+    LoadingSubtitle = "Vui lòng đợi",
+    ConfigurationSaving = {
+        Enabled = true,
+        FolderName = nil, -- Lưu trong workspace nếu để nil
+        FileName = "ThoiGianVN"
+    },
+    Discord = {
+        Enabled = false,
+        Invite = "", -- Thêm link Discord nếu muốn
+        RememberJoins = true
+    },
+    KeySystem = false, -- Không cần key
+})
+
+local Time_tab = Window:CreateTab("Thời gian", 4483362458) -- Icon ID có thể thay đổi
+
+local Label = Time_tab:CreateLabel("Đang lấy giờ...")
+
+-- Hàm tính giờ Việt Nam
+local function GetVietnamTime()
+    local utc = os.time(os.date("!*t")) -- Lấy giờ UTC
+    local vietnamTime = utc + 7 * 3600 -- Thêm 7 tiếng để thành UTC+7
+    return os.date("Giờ hiện tại: %H:%M:%S", vietnamTime)
+end
+
+-- Hàm cập nhật giờ
+local function UpdateTime()
+    while wait(1) do
+        local time = GetVietnamTime()
+        Label:Set(time)
+    end
+end
+
+-- Chạy hàm cập nhật giờ
+task.spawn(UpdateTime)
+
+Rayfield:Notify({
+    Title = "Hoàn tất",
+    Content = "Giao diện hiển thị giờ Việt Nam đã sẵn sàng.",
+    Duration = 5,
+    Image = 4483362458, -- Icon ID (tuỳ chọn)
+    Actions = { -- Thêm nút nếu muốn
+        Ignore = {
+            Name = "OK",
+            Callback = function() end
+        }
+    },
+})
