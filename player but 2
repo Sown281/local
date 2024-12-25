@@ -2,9 +2,9 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Window = Rayfield:CreateWindow({
    Name = "13:30",
    Icon = 0,
-   LoadingTitle = "i cant...",
-   LoadingSubtitle = "by Soffee",
-   Theme = "Bloom",
+   LoadingTitle = "Why i cant...",
+   LoadingSubtitle = "by Neko",
+   Theme = "Default",
 
    DisableRayfieldPrompts = false,
    DisableBuildWarnings = false,
@@ -21,7 +21,7 @@ local Window = Rayfield:CreateWindow({
       RememberJoins = true
    },
 
-   KeySystem = false,
+   KeySystem = True,
    KeySettings = {
       Title = "Untitled",
       Subtitle = "Key System",
@@ -29,7 +29,7 @@ local Window = Rayfield:CreateWindow({
       FileName = "Key",
       SaveKey = false,
       GrabKeyFromSite = false,
-      Key = {"Sown123"}
+      Key = {"S"}
    }
 })
 
