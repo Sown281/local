@@ -12,7 +12,7 @@ local Window = Rayfield:CreateWindow({
 
 -- Tab chính (chức năng chính)
 local Tab1 = Window:CreateTab("Main Functions", "trash-2")
-Tab1:CreateLabel("Chức năng chính của script.")
+local Section = Tab1:CreateSection("các chức năng chính")
 
 -- Infinite Jump
 local InfiniteJumpEnabled = false
