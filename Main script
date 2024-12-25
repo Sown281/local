@@ -7,7 +7,7 @@ local Window = Rayfield:CreateWindow({
     Icon = "terminal",
     LoadingTitle = "Script just beta",
     LoadingSubtitle = "dev by Neko",
-    Theme = "Default", -- Màu theme
+    Theme = "DarkBlue", -- Màu theme
 })
 
 -- Tab chính (chức năng chính)
