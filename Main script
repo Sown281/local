@@ -3,8 +3,8 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 
 -- Tạo cửa sổ chính (window)
 local Window = Rayfield:CreateWindow({
-    Name = "Player but 2", -- Tên cửa sổ
-    Icon = 0,
+    Name = "Trash can", -- Tên cửa sổ
+    Icon = "terminal",
     LoadingTitle = "Script just beta",
     LoadingSubtitle = "dev by Neko",
     Theme = "Default", -- Màu theme
@@ -99,7 +99,7 @@ task.spawn(UpdateTime)
 Rayfield:Notify({
     Title = "Hoàn tất",
     Content = "Script đã tích hợp đầy đủ chức năng.",
-    Duration = 5,
+    Duration = 15,
     Image = "check", -- Icon Lucide cho thông báo
     Actions = { -- Thêm nút nếu cần
         Ignore = {
