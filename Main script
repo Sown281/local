@@ -1,0 +1,109 @@
+-- Giả sử Rayfield đã được tải trước đó từ dòng loadstring(game:HttpGet(...))
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+-- Tạo cửa sổ chính (window)
+local Window = Rayfield:CreateWindow({
+    Name = "Player but 2", -- Tên cửa sổ
+    Icon = "lucide:home",
+    LoadingTitle = "Script just beta",
+    LoadingSubtitle = "dev by Neko",
+    Theme = "Default", -- Màu theme
+})
+
+-- Tab chính (chức năng chính)
+local Tab1 = Window:CreateTab("Main Functions", "lucide:sliders")
+Tab1:CreateLabel("Chức năng chính của script.")
+
+-- Infinite Jump
+local InfiniteJumpEnabled = false
+Tab1:CreateToggle({
+    Name = "Infinite Jump",
+    CurrentValue = false,
+    Flag = "ToggleInfiniteJump",
+    Callback = function(Value)
+        InfiniteJumpEnabled = Value
+    end,
+})
+
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if InfiniteJumpEnabled then
+        local Player = game:GetService("Players").LocalPlayer
+        if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            Player.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end
+end)
+
+-- Walk Speed
+local SpeedValue = 16
+local Slider = Tab1:CreateSlider({
+    Name = "Walk Speed",
+    Range = {16, 300},
+    Increment = 1,
+    Suffix = "Speed",
+    CurrentValue = 16,
+    Flag = "WalkSpeedSlider",
+    Callback = function(Value)
+        SpeedValue = Value
+        local Player = game:GetService("Players").LocalPlayer
+        if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            Player.Character.Humanoid.WalkSpeed = SpeedValue
+        end
+    end,
+})
+
+game:GetService("RunService").Stepped:Connect(function()
+    local Player = game:GetService("Players").LocalPlayer
+    if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+        Player.Character.Humanoid.WalkSpeed = SpeedValue
+    end
+end)
+
+-- Nút Reset Walk Speed
+Tab1:CreateButton({
+    Name = "Reset Walk Speed",
+    Callback = function()
+        SpeedValue = 16
+        Slider:Set(16)
+        local Player = game:GetService("Players").LocalPlayer
+        if Player and Player.Character and Player.Character:FindFirstChild("Humanoid") then
+            Player.Character.Humanoid.WalkSpeed = SpeedValue
+        end
+    end,
+})
+
+-- **Thêm Time Tab vào script chính**
+local TimeTab = Window:CreateTab("Thời gian Việt Nam", "lucide:clock")
+local TimeLabel = TimeTab:CreateLabel("Đang lấy giờ...")
+
+-- Hàm lấy giờ Việt Nam
+local function GetVietnamTime()
+    local utc = os.time(os.date("!*t")) -- Lấy giờ UTC
+    local vietnamTime = utc + 7 * 3600 -- Thêm 7 giờ để thành UTC+7
+    return os.date("Giờ hiện tại: %H:%M:%S", vietnamTime)
+end
+
+-- Hàm cập nhật giờ
+local function UpdateTime()
+    while wait(1) do
+        local time = GetVietnamTime()
+        TimeLabel:Set(time)
+    end
+end
+
+-- Chạy cập nhật giờ
+task.spawn(UpdateTime)
+
+-- Thông báo hoàn tất
+Rayfield:Notify({
+    Title = "Hoàn tất",
+    Content = "Script đã tích hợp đầy đủ chức năng.",
+    Duration = 5,
+    Image = "lucide:check-circle", -- Icon Lucide cho thông báo
+    Actions = { -- Thêm nút nếu cần
+        Ignore = {
+            Name = "OK",
+            Callback = function() end
+        }
+    },
+})
