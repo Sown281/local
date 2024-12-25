@@ -4,14 +4,14 @@ local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 -- Tạo cửa sổ chính (window)
 local Window = Rayfield:CreateWindow({
     Name = "Player but 2", -- Tên cửa sổ
-    Icon = "lucide:home",
+    Icon = "chevrons-left-right-ellipsis",
     LoadingTitle = "Script just beta",
     LoadingSubtitle = "dev by Neko",
     Theme = "Default", -- Màu theme
 })
 
 -- Tab chính (chức năng chính)
-local Tab1 = Window:CreateTab("Main Functions", "lucide:sliders")
+local Tab1 = Window:CreateTab("Main Functions", "trash-2")
 Tab1:CreateLabel("Chức năng chính của script.")
 
 -- Infinite Jump
@@ -73,7 +73,7 @@ Tab1:CreateButton({
 })
 
 -- **Thêm Time Tab vào script chính**
-local TimeTab = Window:CreateTab("Thời gian Việt Nam", "lucide:clock")
+local TimeTab = Window:CreateTab("Thời gian Việt Nam", "clock")
 local TimeLabel = TimeTab:CreateLabel("Đang lấy giờ...")
 
 -- Hàm lấy giờ Việt Nam
