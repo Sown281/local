@@ -4,10 +4,10 @@ local plr = game.Players
 
 -- Tạo cửa sổ chính (window)
 local Window = Rayfield:CreateWindow({
-    Name = "Trash can", -- Tên cửa sổ
+    Name = "11:30", -- Tên cửa sổ
     Icon = "terminal",
     LoadingTitle = "Script just beta",
-    LoadingSubtitle = "dev by Neko",
+    LoadingSubtitle = "dev by TheFatCat",
     Theme = "DarkBlue", -- Màu theme
 })
 
