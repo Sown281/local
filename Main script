@@ -75,29 +75,32 @@ Tab1:CreateButton({
 
 -- chỉnh máu
 
-
--- **Thêm Time Tab vào script chính**
-local TimeTab = Window:CreateTab("Real time", "clock")
+-- Thêm tab thời gian (Time Tab)
+local TimeTab = Window:CreateTab("Real Time", "clock")
 local TimeLabel = TimeTab:CreateLabel("Đang lấy giờ...")
 
--- Hàm lấy giờ Việt Nam chính xác
+-- Hàm lấy giờ Việt Nam
 local function GetVietnamTime()
-    -- Lấy giờ UTC và điều chỉnh múi giờ
-    local utcTime = os.date("!*t") -- lấy giờ UTC
-    utcTime.hour = utcTime.hour + 7 -- Cộng 7 giờ cho Việt Nam
+    local utcTime = os.date("!*t") -- Lấy giờ UTC
+    utcTime.hour = utcTime.hour + 7 -- Chuyển sang giờ Việt Nam (+7)
+    if utcTime.hour >= 24 then
+        utcTime.hour = utcTime.hour - 24 -- Điều chỉnh giờ nếu vượt quá 24
+    end
     return string.format("Giờ hiện tại: %02d:%02d:%02d", utcTime.hour, utcTime.min, utcTime.sec)
 end
 
--- Hàm cập nhật giờ
+-- Hàm cập nhật giờ và hiển thị trên giao diện
 local function UpdateTime()
-    while wait(1) do
-        local time = GetVietnamTime()
-        TimeLabel:Set(time)
+    while true do
+        local currentTime = GetVietnamTime()
+        TimeLabel:Set(currentTime) -- Cập nhật nhãn với giờ hiện tại
+        wait(1) -- Cập nhật mỗi giây
     end
 end
 
--- Chạy cập nhật giờ
+-- Chạy cập nhật giờ trên một luồng riêng
 task.spawn(UpdateTime)
+
 
 -- Thông báo hoàn tất
 Rayfield:Notify({
